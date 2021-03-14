@@ -46,8 +46,8 @@ jobs:
     # There is a bug with Checkov, so we need to create a JSON
     # version of the plan for it.
     - name: Create JSON of plan
-      shell: pwsh
-      run: terraform show -json ${{ github.workspace }}/terraform.plan | Set-Content ${{ github.workspace }}/terraform.plan.json
+      shell: bash
+      run: terraform show -json ${{ github.workspace }}/terraform.plan > ${{ github.workspace }}/terraform.plan.json
 
     - name: Upload plan to artifact
       uses: actions/upload-artifact@v2
