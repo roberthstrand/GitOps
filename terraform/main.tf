@@ -1,3 +1,4 @@
-output "test" {
-  value = var.deployment_name
+resource "azurerm_resource_group" "demo" {
+  name     = "demo-rg"
+  location = "West Europe"
 }

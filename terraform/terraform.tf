@@ -12,3 +12,6 @@ terraform {
     key                  = "prod-cluster.tfstate"
   }
 }
+provider "azurerm" {
+  features {}
+}
