@@ -43,6 +43,8 @@ jobs:
     - name: Terraform plan
       run: terraform plan -var-file="env/${{ github.base_ref }}.tfvars" -out=${{ github.workspace }}/terraform.plan
 
+    # There is a bug with Checkov, so we need to create a JSON
+    # version of the plan for it.
     - name: Create JSON of plan
       shell: pwsh
       run: terraform show -json ${{ github.workspace }}/terraform.plan | Set-Content terraform.plan.json
@@ -51,7 +53,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: plan
-        path: ${{ github.workspace }}
+        path: ${{ github.workspace }}/terraform.plan*
 
   checkov:
     name: Running Checkov
