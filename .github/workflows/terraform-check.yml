@@ -3,7 +3,6 @@ on: pull_request
 
 defaults:
   run:
-    shell: pwsh
     working-directory: terraform
 
 jobs:
