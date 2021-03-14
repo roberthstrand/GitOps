@@ -41,7 +41,7 @@ jobs:
       run: terraform init
 
     - name: Terraform plan
-      run: terraform plan -var-file="env/${{ github.base_ref }}.tfvars" -out=terraform.plan
+      run: terraform plan -var-file="env/${{ github.base_ref }}.tfvars" -out=${{ github.workspace }}/terraform.plan
 
     - name: Upload plan to artifact
       uses: actions/upload-artifact@v2
