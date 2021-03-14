@@ -36,15 +36,18 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: hashicorp/setup-terraform@v1
+
     - name: Terraform initiate
       run: terraform init
+
     - name: Terraform plan
       run: terraform plan -var-file="env/${{ github.base_ref }}.tfvars" -out=terraform.plan
+
     - name: Upload plan to artifact
       uses: actions/upload-artifact@v2
       with:
         name: plan
-        path: terraform.plan
+        path: ${{ github.workspace }}/terraform.plan
 
   checkov:
     name: Running Checkov
