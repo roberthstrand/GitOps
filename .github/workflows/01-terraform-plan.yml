@@ -64,6 +64,7 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: plan
+          path: ${{ github.workspace }}
 
       - name: Test with Checkov
         id: checkov
