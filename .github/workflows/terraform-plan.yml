@@ -1,0 +1,33 @@
+name: Terraform Plan
+on: pull_request
+
+env:
+  ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+  ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+  ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+  ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
+defaults:
+  run:
+    shell: pwsh
+    working-directory: terraform
+
+jobs:
+  terraform_plan:
+    name: terraform plan
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: hashicorp/setup-terraform@v1
+
+    - name: Terraform initiate
+      run: terraform init
+
+    - name: Terraform plan
+      run: terraform plan -var-file="env/${{ github.base_ref }}.tfvars" -out=${{ github.workspace }}/terraform.plan
+
+    - name: Upload plan to artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: plan
+        path: ${{ github.workspace }}/terraform.plan
