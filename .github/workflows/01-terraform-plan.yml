@@ -47,7 +47,7 @@ jobs:
     # version of the plan for it.
     - name: Create JSON of plan
       shell: pwsh
-      run: terraform show -json ${{ github.workspace }}/terraform.plan | Set-Content terraform.plan.json
+      run: terraform show -json ${{ github.workspace }}/terraform.plan | Set-Content ${{ github.workspace }}/terraform.plan.json
 
     - name: Upload plan to artifact
       uses: actions/upload-artifact@v2
