@@ -34,18 +34,23 @@ jobs:
       run: terraform plan -out=terraform.plan
     - name: Upload plan to artifact
       uses: actions/upload-artifact@v2
-        with:
-          name: plan
-          path: terraform.plan
+      with:
+        name: plan
+        path: terraform.plan
 
   checkov:
     name: Running Checkov
+    runs-on: ubuntu-latest
+    needs: terraform_plan
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python 3.8
         uses: actions/setup-python@v1
         with:
           python-version: 3.8
+      - uses: actions/download-artifact@v2
+        with:
+          name: plan
       - name: Test with Checkov
         id: checkov
         uses: bridgecrewio/checkov-action@master
