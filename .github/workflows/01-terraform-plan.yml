@@ -60,11 +60,14 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: 3.8
+
       - uses: actions/download-artifact@v2
         with:
           name: plan
+
       - name: Test with Checkov
         id: checkov
         uses: bridgecrewio/checkov-action@master
         with:
+          directory: ${{ github.workspace }}
           framework: terraform
